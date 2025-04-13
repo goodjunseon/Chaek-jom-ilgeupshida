@@ -1,0 +1,37 @@
+package com.junseon.book.domain.dto;
+
+
+import com.junseon.book.domain.entity.User;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class UserLoginDTO {
+
+    private String email;
+    private String password;
+
+
+    public static UserLoginDTO toUserLoginDTO(User user){
+        UserLoginDTO userLoginDTO = new UserLoginDTO();
+
+        userLoginDTO.setEmail(user.getEmail());
+        userLoginDTO.setPassword(user.getPassword());
+
+        return userLoginDTO;
+    }
+
+    public static User toUser(UserLoginDTO userLoginDTO){
+        User user = new User();
+
+        user.setEmail(userLoginDTO.getEmail());
+        user.setPassword(userLoginDTO.getPassword());
+
+        return user;
+    }
+}

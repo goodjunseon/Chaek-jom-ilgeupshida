@@ -94,16 +94,16 @@
   </style>
   <script>
     function checkDuplicateId() {
-        const userId = document.getElementById("username").value;
+        const emailInput = document.getElementById("email").value; // ID가 "email"인 입력창에서 값을 읽어옴.
         const msgEl = document.getElementById("id-check-msg");
 
-        if (userId.trim() === "") {
-            msgEl.innerText = "아이디를 입력해주세요.";
+        if (emailInput.trim() === "") {
+            msgEl.innerText = "아이디(이메일)를 입력해주세요.";
             msgEl.style.color = "red";
             return;
         }
 
-        fetch(`/user/check-id?username=${encodeURIComponent(userId)}`)
+        fetch(`/user/check-id?email=${encodeURIComponent(emailInput)}`)
             .then(response => response.text())
             .then(result => {
                 if (result === "duplicate") {

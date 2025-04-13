@@ -1,7 +1,6 @@
 package com.junseon.book.service;
 
-import com.junseon.book.domain.dto.LoginResultDTO;
-import com.junseon.book.domain.dto.UserSaveDTO;
+import com.junseon.book.domain.dto.*;
 import com.junseon.book.domain.entity.User;
 import com.junseon.book.domain.enums.LoginStatus;
 import com.junseon.book.repository.UserRepository;
@@ -23,7 +22,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public LoginResultDTO login(UserSaveDTO userSaveDTO) {
+    public LoginResultDTO login(UserLoginDTO userSaveDTO) {
         Optional<User> byUserEmail = userRepository.findByEmail(userSaveDTO.getEmail());
 
         if (byUserEmail.isPresent()) {
@@ -38,5 +37,24 @@ public class UserService {
             // 이메일 불일치
             return new LoginResultDTO(LoginStatus.EMAIL_ERROR,null);
         }
+    }
+
+    public String findEmail(UserFindEmailDTO userFindEmailDTO) {
+        return userRepository.findByNameAndPhone(
+                userFindEmailDTO.getName(),
+                userFindEmailDTO.getPhone()
+        ).map(User::getEmail).orElse(null);
+    }
+
+    public String findPassword(UserFindPasswordDTO userFindPasswordDTO) {
+        return userRepository.findByEmailAndNameAndPhone(
+                userFindPasswordDTO.getEmail(),
+                userFindPasswordDTO.getName(),
+                userFindPasswordDTO.getPhone()
+        ).map(User::getPassword).orElse(null);
+    }
+
+    public boolean isEmailDuplicated(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

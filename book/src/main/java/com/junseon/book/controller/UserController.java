@@ -1,17 +1,13 @@
 package com.junseon.book.controller;
 
-import com.junseon.book.domain.dto.LoginResultDTO;
-import com.junseon.book.domain.dto.UserSaveDTO;
+import com.junseon.book.domain.dto.*;
 import com.junseon.book.domain.enums.LoginStatus;
 import com.junseon.book.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -40,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserSaveDTO userSaveDTO, HttpSession session, Model model) {
-        LoginResultDTO loginResultDTO = userService.login(userSaveDTO);
+    public String login(@ModelAttribute UserLoginDTO userLoginDTO, HttpSession session, Model model) {
+        LoginResultDTO loginResultDTO = userService.login(userLoginDTO);
         if (loginResultDTO.getStatus() == LoginStatus.SUCCESS){
             session.setAttribute("loginEmail", loginResultDTO.getUserSaveDTO().getEmail());
             return "main";
@@ -57,9 +53,46 @@ public class UserController {
 
     @GetMapping("/find-email")
     public String findEmailForm() {
-
         return "findEmail";
     }
 
+    @GetMapping("/find-password")
+    public String findPasswordForm() {
+        return "findPassword";
+    }
+
+    @PostMapping("/find-email")
+    public String findEmail(@ModelAttribute UserFindEmailDTO userFindEmailDTO, Model model) {
+    // 이름, 전화번호 받아와서 일치하면 email 값 전달하기
+        String email = userService.findEmail(userFindEmailDTO);
+
+        if (email != null) {
+            model.addAttribute("foundEmail", "가입된 이메일: " + email);
+        } else {
+            model.addAttribute("findEmailError", "일치하는 회원 정보를 찾을 수 없습니다.");
+        }
+        return "findEmail";
+    }
+
+    @PostMapping("find-password")
+    public String findPassword(@ModelAttribute UserFindPasswordDTO userFindPasswordDTO, Model model){
+        String password = userService.findPassword(userFindPasswordDTO);
+
+        if(password != null) {
+            model.addAttribute("foundPassword", "가입된 비밀번호: " + password);
+        } else {
+            model.addAttribute("findPasswordError", "일치하는 회원 정보를 찾을 수 없습니다.");
+        }
+        return "findPassword";
+
+    }
+
+    @GetMapping("/check-id")
+    @ResponseBody
+    public String checkDuplicateId(@RequestParam("email") String email) {
+        // userRepository의 existsByEmail 메서드를 통해 이메일이 존재하는 확인
+        boolean isDuplicate = userService.isEmailDuplicated(email);
+        return isDuplicate ? "duplicate" : "ok";
+    }
 
 }

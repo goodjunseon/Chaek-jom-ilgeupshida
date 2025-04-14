@@ -28,7 +28,7 @@ public class UserService {
         if (byUserEmail.isPresent()) {
             User user = byUserEmail.get();
             if (user.getPassword().equals(userSaveDTO.getPassword())) {
-                return new LoginResultDTO(LoginStatus.SUCCESS, UserSaveDTO.toUserSaveDTO(user));
+                return new LoginResultDTO(LoginStatus.SUCCESS, UserLoginDTO.toUserLoginDTO(user));
             } else {
                 // 비밀번호 불일치
                 return new LoginResultDTO(LoginStatus.PASSWORD_ERROR,null);
@@ -56,5 +56,9 @@ public class UserService {
 
     public boolean isEmailDuplicated(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
     }
 }

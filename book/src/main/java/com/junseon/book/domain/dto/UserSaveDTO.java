@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 public class UserSaveDTO {
-    private Long id;
+    private Long userId;
     private String email;
     private String password;
     private String name;
@@ -23,7 +23,7 @@ public class UserSaveDTO {
     public static UserSaveDTO toUserSaveDTO(User user){
         UserSaveDTO userSaveDTO = new UserSaveDTO();
 
-        userSaveDTO.setId(user.getId());
+        userSaveDTO.setUserId(user.getUserId());
         userSaveDTO.setEmail(user.getEmail());
         userSaveDTO.setPassword(user.getPassword());
         userSaveDTO.setName(user.getName());

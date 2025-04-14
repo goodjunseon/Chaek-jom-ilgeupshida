@@ -12,5 +12,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginResultDTO {
     private LoginStatus status;
-    private UserSaveDTO userSaveDTO;
+    private UserLoginDTO userLoginDTO;
 }

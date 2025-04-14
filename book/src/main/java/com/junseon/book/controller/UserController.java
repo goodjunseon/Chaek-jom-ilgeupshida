@@ -1,6 +1,7 @@
 package com.junseon.book.controller;
 
 import com.junseon.book.domain.dto.*;
+import com.junseon.book.domain.entity.User;
 import com.junseon.book.domain.enums.LoginStatus;
 import com.junseon.book.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @Controller
@@ -19,7 +22,7 @@ public class UserController {
 
     @GetMapping("/save")
     public String saveForm() {
-        return "save";
+        return "user/save";
     }
 
     @PostMapping("/save")
@@ -27,38 +30,64 @@ public class UserController {
         userService.save(userSaveDTO);
         System.out.println("UserController.save");
         System.out.println("userSaveDTO = " + userSaveDTO);
-        return "login";
+        return "user/login";
     }
 
     @GetMapping("/login")
     public String loginForm() {
-        return "login";
+        return "user/login";
     }
 
+    // 로그인 컨트롤러
     @PostMapping("/login")
     public String login(@ModelAttribute UserLoginDTO userLoginDTO, HttpSession session, Model model) {
         LoginResultDTO loginResultDTO = userService.login(userLoginDTO);
+
         if (loginResultDTO.getStatus() == LoginStatus.SUCCESS){
-            session.setAttribute("loginEmail", loginResultDTO.getUserSaveDTO().getEmail());
-            return "main";
+            session.setAttribute("loginEmail", userLoginDTO.getEmail());
+
+            Long userId = loginResultDTO.getUserLoginDTO().getUserId();
+            User user = userService.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
+            session.setAttribute("loginUser", user);
+            return "redirect:/user/" + userId + "/dashboard";
         } else {
             if (loginResultDTO.getStatus() == LoginStatus.EMAIL_ERROR){
                 model.addAttribute("loginError", "이메일이 일치하지 않습니다.");
             } else if (loginResultDTO.getStatus() == LoginStatus.PASSWORD_ERROR) {
                 model.addAttribute("loginError", "비밀번호가 일치하지 않습니다.");
             }
-            return "login";
+            return "user/login";
         }
+    }
+
+    @GetMapping("/{userId}/dashboard")
+    public String userDashboard(@PathVariable("userId") Long userId, Model model, HttpSession session) {
+        // 1. 세션에서 로그인 사용자 정보 가져오기
+        User user = (User) session.getAttribute("loginUser");
+
+        // 2. 세션이 없거나 userId가 일치하지 않으면 로그인 페이지로 리다이렉트
+        if (user == null || !user.getUserId().equals(userId)) {
+            return "redirect:/login";
+        }
+
+        //3. 디버깅용 로그
+        System.out.println("로그인 유저 ID: " + user.getUserId());
+        System.out.println("로그인 유저 이름: " + user.getName());
+        System.out.println("로그인 유저 이메일: " + user.getEmail());
+
+        model.addAttribute("user", user);
+        return "user/dashboard"; // templates/user/dashboard.html
     }
 
     @GetMapping("/find-email")
     public String findEmailForm() {
-        return "findEmail";
+        return "user/findEmail";
     }
 
     @GetMapping("/find-password")
     public String findPasswordForm() {
-        return "findPassword";
+        return "user/findPassword";
     }
 
     @PostMapping("/find-email")
@@ -71,7 +100,7 @@ public class UserController {
         } else {
             model.addAttribute("findEmailError", "일치하는 회원 정보를 찾을 수 없습니다.");
         }
-        return "findEmail";
+        return "user/findEmail";
     }
 
     @PostMapping("find-password")
@@ -83,7 +112,7 @@ public class UserController {
         } else {
             model.addAttribute("findPasswordError", "일치하는 회원 정보를 찾을 수 없습니다.");
         }
-        return "findPassword";
+        return "user/findPassword";
 
     }
 

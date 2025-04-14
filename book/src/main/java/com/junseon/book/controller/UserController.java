@@ -130,4 +130,18 @@ public class UserController {
         return "redirect:/user/login";
     }
 
+    @GetMapping("/myPage")
+    public String showMyPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("loginUser");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        UserMyPageDTO dto = UserMyPageDTO.from(user);
+        model.addAttribute("user", dto); // dto 전달
+        return "user/myPage"; // templates/user/myPage.html
+
+    }
+
 }

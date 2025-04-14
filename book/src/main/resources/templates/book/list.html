@@ -81,6 +81,6 @@
   </tbody>
 </table>
 
-<a href="/book/main" class="back-btn">← 메인으로 돌아가기</a>
+<a th:href="@{'/user/' + ${user.userId} + '/dashboard'}" class="back-btn">← 메인으로 돌아가기</a>
 </body>
 </html>

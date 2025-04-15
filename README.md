@@ -25,7 +25,7 @@
 
 > **도서, 회원, 대여, 장르, 저자** 관계 중심의 설계
 
-![ERD.png](docs/ERD.png)
+![ERD.png](book/docs/ERD.png)
 
 ---
 

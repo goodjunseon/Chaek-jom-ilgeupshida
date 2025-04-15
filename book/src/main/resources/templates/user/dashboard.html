@@ -62,7 +62,7 @@
         <span th:text="'환영합니다, ' + ${user.name} + '님!'"></span>
     </div>
     <div class="buttons">
-        <a href="/user/myPage">마이페이지</a>
+        <a th:href="@{'/user/' + ${user.userId} + '/myPage'}">마이페이지</a>
         <a href="/user/logout">로그아웃</a>
     </div>
 </div>

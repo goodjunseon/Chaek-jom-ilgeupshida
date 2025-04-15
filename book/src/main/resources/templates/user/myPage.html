@@ -67,12 +67,12 @@
 </head>
 <body>
 <div class="mypage-container">
-  <h2>👤 마이페이지</h2>
+  <h2>마이페이지</h2>
 
-  <form th:action="@{/user/update}" method="post">
+  <form th:action="@{'/user/' + ${user.userId} + '/myPage'}" method="post">
     <div class="form-group">
       <label for="name">이름</label>
-      <input type="text" id="name" name="name" th:value="${user.name}" readonly>
+      <input type="text" id="name" name="name" th:value="${user.name}" required>
     </div>
 
     <div class="form-group">
@@ -92,6 +92,11 @@
 
     <button type="submit" class="submit-btn">정보 수정</button>
   </form>
+
+  <form th:action="@{'/user/' + ${user.userId} + '/delete'}" method="post" style="margin-top: 10px;">
+    <button type="submit" class="submit-btn" style="background-color: #f44336;">회원 탈퇴</button>
+  </form>
+
 </div>
 </body>
 </html>

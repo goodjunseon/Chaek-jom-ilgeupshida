@@ -44,8 +44,7 @@ public class UserController {
         LoginResultDTO loginResultDTO = userService.login(userLoginDTO);
 
         if (loginResultDTO.getStatus() == LoginStatus.SUCCESS){
-            session.setAttribute("loginEmail", userLoginDTO.getEmail());
-
+//            session.setAttribute("loginUser", userLoginDTO);
             Long userId = loginResultDTO.getUserLoginDTO().getUserId();
             User user = userService.findById(userId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
@@ -130,18 +129,49 @@ public class UserController {
         return "redirect:/user/login";
     }
 
-    @GetMapping("/myPage")
-    public String showMyPage(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("loginUser");
+    @GetMapping("/{userId}/myPage")
+    public String showMyPage(@PathVariable("userId") Long userId, HttpSession session, Model model) {
+        User loginUser = (User) session.getAttribute("loginUser");
 
-        if (user == null) {
+        if (loginUser == null || userId == null || !userId.equals(loginUser.getUserId())) {
             return "redirect:/login";
         }
 
-        UserMyPageDTO dto = UserMyPageDTO.from(user);
-        model.addAttribute("user", dto); // dto 전달
-        return "user/myPage"; // templates/user/myPage.html
-
+        UserMyPageDTO dto = UserMyPageDTO.from(loginUser);
+        model.addAttribute("user", dto);
+        return "user/myPage";
     }
+
+
+    @PostMapping("/{userId}/myPage")
+    public String userUpdate(@PathVariable ("userId") Long userId, @ModelAttribute  UserUpdateDTO userUpdateDTO, HttpSession session) {
+
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        if (loginUser == null || !userId.equals(loginUser.getUserId())) {
+            return "redirect:/login";
+        }
+
+        User updateUser = userService.userUpdate(userId, userUpdateDTO);
+        session.setAttribute("loginUser",updateUser);
+
+        return "redirect:/user/" + userId + "/myPage"; // GET으로 리다이렉트
+    }
+
+    @PostMapping("/{userId}/delete")
+    public String deleteUser(@PathVariable("userId") Long userId, HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        if (loginUser == null || !userId.equals(loginUser.getUserId())) {
+            return "redirect:/login";
+        }
+
+        userService.deleteUser(userId);
+        session.invalidate(); // 세션 제거
+
+        return "redirect:/"; // 홈 or 로그인 페이지로
+    }
+
+
 
 }

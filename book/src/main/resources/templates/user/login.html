@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>로그인 - 도서관리 시스템</title>
@@ -75,7 +75,7 @@
 <body>
 <div class="login-container">
   <h2>로그인</h2>
-  <form action="/user/login" method="post">
+  <form th:action="@{/user/login}" method="post">
     <input type="text" name="email" placeholder="아이디" required>
     <input type="password" name="password" placeholder="비밀번호" required>
     <button type="submit">로그인</button>

@@ -61,4 +61,20 @@ public class UserService {
     public Optional<User> findById(Long userId) {
         return userRepository.findById(userId);
     }
+
+    @Transactional
+    public User userUpdate(Long userId,UserUpdateDTO userUpdateDTO) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 사용자가 존재하지 않습니다. id=" + userId));
+
+        user.setName(userUpdateDTO.getName());
+        user.setPassword(userUpdateDTO.getPassword());
+        user.setPhone(userUpdateDTO.getPhone());
+
+        return user;
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
 }

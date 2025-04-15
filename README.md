@@ -46,7 +46,7 @@
 
 ## 📑 문서 링크
 
-[User_docs.md](book/docs/User_docs.md)
+- [회원 기능 명세서](book/docs/User_docs.md)
 - [도서 서비스 명세서](book/docs/BookService_docs.md) ← (작성 예정)
 - [대여 기능 명세서](book/docs/RentalService_docs.md) ← (작성 예정)
 

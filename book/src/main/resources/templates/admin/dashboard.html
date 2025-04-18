@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>관리자 대시보드</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #eef1f5;
+        padding: 40px;
+    }
+
+    .dashboard-container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .actions a {
+        display: block;
+        background-color: #2196F3;
+        color: white;
+        text-decoration: none;
+        padding: 15px;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    .actions a:hover {
+        background-color: #1976D2;
+    }
+  </style>
 </head>
 <body>
-$END$
+<div class="dashboard-container">
+  <h2>📊 관리자 대시보드</h2>
+  <div class="actions">
+    <a th:href="@{/admin/users}">전체 회원 관리</a>
+    <a th:href="@{/admin/books}">도서 목록 관리</a>
+    <a th:href="@{/admin/stats}">대여 통계 보기</a>
+    <a th:href="@{/logout}">로그아웃</a>
+  </div>
+</div>
 </body>
 </html>

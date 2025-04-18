@@ -38,6 +38,9 @@ public class User {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
+    private Role role = Role.USER; // 기본 디폴트 값은 USER
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

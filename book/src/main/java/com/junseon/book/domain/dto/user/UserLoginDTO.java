@@ -1,10 +1,8 @@
-package com.junseon.book.domain.dto;
+package com.junseon.book.domain.dto.user;
 
 
 import com.junseon.book.domain.entity.User;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

@@ -1,7 +1,8 @@
-package com.junseon.book.domain.dto;
+package com.junseon.book.domain.dto.user;
 
 
 import com.junseon.book.domain.entity.User;
+import com.junseon.book.domain.enums.Role;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class UserSaveDTO {
     private String name;
     private String phone;
     private LocalDateTime createdAt;
+    private Role role = Role.USER;
 
 
     public static UserSaveDTO toUserSaveDTO(User user){
@@ -33,14 +35,14 @@ public class UserSaveDTO {
         return userSaveDTO;
     }
 
-    public static User toUser(UserSaveDTO userSaveDTO){
+    public static User toUser(UserSaveDTO dto){
         User user = new User();
 
-        user.setEmail(userSaveDTO.getEmail());
-        user.setPassword(userSaveDTO.getPassword());
-        user.setName(userSaveDTO.getName());
-        user.setPhone(userSaveDTO.getPhone());
-        user.setCreatedAt(userSaveDTO.getCreatedAt());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        user.setName(dto.getName());
+        user.setPhone(dto.getPhone());
+        user.setCreatedAt(dto.getCreatedAt());
 
         return user;
     }

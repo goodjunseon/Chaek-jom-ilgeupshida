@@ -1,6 +1,6 @@
 package com.junseon.book.controller;
 
-import com.junseon.book.domain.dto.*;
+import com.junseon.book.domain.dto.user.*;
 import com.junseon.book.domain.entity.User;
 import com.junseon.book.domain.enums.LoginStatus;
 import com.junseon.book.service.UserService;
@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 
 @Controller
@@ -41,7 +39,7 @@ public class UserController {
     // 로그인 컨트롤러
     @PostMapping("/login")
     public String login(@ModelAttribute UserLoginDTO userLoginDTO, HttpSession session, Model model) {
-        LoginResultDTO loginResultDTO = userService.login(userLoginDTO);
+        UserLoginResultDTO loginResultDTO = userService.login(userLoginDTO);
 
         if (loginResultDTO.getStatus() == LoginStatus.SUCCESS){
 //            session.setAttribute("loginUser", userLoginDTO);
@@ -67,7 +65,7 @@ public class UserController {
 
         // 2. 세션이 없거나 userId가 일치하지 않으면 로그인 페이지로 리다이렉트
         if (user == null || !user.getUserId().equals(userId)) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
 
         //3. 디버깅용 로그
@@ -134,7 +132,7 @@ public class UserController {
         User loginUser = (User) session.getAttribute("loginUser");
 
         if (loginUser == null || userId == null || !userId.equals(loginUser.getUserId())) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
 
         UserMyPageDTO dto = UserMyPageDTO.from(loginUser);
@@ -149,7 +147,7 @@ public class UserController {
         User loginUser = (User) session.getAttribute("loginUser");
 
         if (loginUser == null || !userId.equals(loginUser.getUserId())) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
 
         User updateUser = userService.userUpdate(userId, userUpdateDTO);
@@ -163,7 +161,7 @@ public class UserController {
         User loginUser = (User) session.getAttribute("loginUser");
 
         if (loginUser == null || !userId.equals(loginUser.getUserId())) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
 
         userService.deleteUser(userId);

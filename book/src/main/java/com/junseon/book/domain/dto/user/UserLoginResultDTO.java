@@ -1,4 +1,4 @@
-package com.junseon.book.domain.dto;
+package com.junseon.book.domain.dto.user;
 
 import com.junseon.book.domain.enums.LoginStatus;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResultDTO {
+public class UserLoginResultDTO {
     private LoginStatus status;
     private UserLoginDTO userLoginDTO;
 }

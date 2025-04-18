@@ -1,6 +1,6 @@
 package com.junseon.book.service;
 
-import com.junseon.book.domain.dto.*;
+import com.junseon.book.domain.dto.user.*;
 import com.junseon.book.domain.entity.User;
 import com.junseon.book.domain.enums.LoginStatus;
 import com.junseon.book.repository.UserRepository;
@@ -22,20 +22,20 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public LoginResultDTO login(UserLoginDTO userSaveDTO) {
+    public UserLoginResultDTO login(UserLoginDTO userSaveDTO) {
         Optional<User> byUserEmail = userRepository.findByEmail(userSaveDTO.getEmail());
 
         if (byUserEmail.isPresent()) {
             User user = byUserEmail.get();
             if (user.getPassword().equals(userSaveDTO.getPassword())) {
-                return new LoginResultDTO(LoginStatus.SUCCESS, UserLoginDTO.toUserLoginDTO(user));
+                return new UserLoginResultDTO(LoginStatus.SUCCESS, UserLoginDTO.toUserLoginDTO(user));
             } else {
                 // 비밀번호 불일치
-                return new LoginResultDTO(LoginStatus.PASSWORD_ERROR,null);
+                return new UserLoginResultDTO(LoginStatus.PASSWORD_ERROR,null);
             }
         } else {
             // 이메일 불일치
-            return new LoginResultDTO(LoginStatus.EMAIL_ERROR,null);
+            return new UserLoginResultDTO(LoginStatus.EMAIL_ERROR,null);
         }
     }
 

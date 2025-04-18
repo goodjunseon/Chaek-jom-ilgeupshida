@@ -1,6 +1,7 @@
 package com.junseon.book.domain.entity;
 
 
+import com.junseon.book.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

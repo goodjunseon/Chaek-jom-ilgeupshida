@@ -1,10 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>전체 회원 관리</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 40px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+        padding: 12px;
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+    }
+
+    th {
+        background-color: #e3e3e3;
+    }
+
+    tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .edit-btn {
+        background-color: #2196F3;
+        color: white;
+    }
+
+    .delete-btn {
+        background-color: #f44336;
+        color: white;
+        margin-left: 8px;
+    }
+
+    .back-btn {
+        display: block;
+        width: 200px;
+        margin: 30px auto 0;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .back-btn:hover {
+        background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-$END$
+
+<h2>👥 전체 회원 관리</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>회원 ID</th>
+    <th>이름</th>
+    <th>이메일</th>
+    <th>전화번호</th>
+    <th>권한</th>
+    <th>가입일</th>
+    <th>관리</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${userList}">
+    <td th:text="${user.userId}">1</td>
+    <td th:text="${user.name}">홍길동</td>
+    <td th:text="${user.email}">user@example.com</td>
+    <td th:text="${user.phone}">010-1234-5678</td>
+    <td th:text="${user.role}">USER</td>
+    <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}">2024-04-26</td>
+    <td>
+      <a th:href="@{'/admin/users/' + ${user.userId} + '/edit'}">
+        <button class="action-btn edit-btn">수정</button>
+      </a>
+      <form th:action="@{'/admin/users/' + ${user.userId} + '/delete'}" method="post" style="display:inline;">
+        <button class="action-btn delete-btn" type="submit"
+                onclick="return confirm('정말 삭제하시겠습니까?');">
+          삭제
+        </button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<a th:href="@{/admin/dashboard}" class="back-btn">← 관리자 대시보드로</a>
+
 </body>
 </html>

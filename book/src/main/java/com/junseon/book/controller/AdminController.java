@@ -1,5 +1,6 @@
 package com.junseon.book.controller;
 
+import com.junseon.book.domain.dto.user.UserFindAllDTO;
 import com.junseon.book.domain.entity.User;
 import com.junseon.book.domain.enums.Role;
 import com.junseon.book.service.UserService;
@@ -7,11 +8,9 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -52,5 +51,13 @@ public class AdminController {
         }
 
         return "admin/dashboard";
+    }
+
+    @GetMapping("/users")
+    public String adminUsersList(Model model){
+        List<UserFindAllDTO> userList = userService.findAll();
+
+        model.addAttribute("userList",userList);
+        return "admin/users";
     }
 }

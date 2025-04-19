@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,5 +82,15 @@ public class UserService {
 
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public List<UserFindAllDTO> findAll(){
+        List<User> userList = userRepository.findAll();
+        List<UserFindAllDTO> userFindAllDTOList = new ArrayList<>();
+
+        for (User user : userList) {
+            userFindAllDTOList.add(UserFindAllDTO.toDTO(user));
+        }
+        return userFindAllDTOList;
     }
 }

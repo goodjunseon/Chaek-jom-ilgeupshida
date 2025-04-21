@@ -60,4 +60,15 @@ public class AdminController {
         model.addAttribute("userList",userList);
         return "admin/users";
     }
+
+    @PostMapping("/users/{userId}/delete")
+    public String deleteUserByAdmin(@PathVariable("userId") Long userId, HttpSession session ) {
+        User admin = (User) session.getAttribute("adminUser");
+
+        if (admin == null || admin.getRole() != Role.ADMIN) {
+            return "redirect:/admin/login";
+        }
+        userService.deleteUser(userId);
+        return "redirect:/admin/users";
+    }
 }

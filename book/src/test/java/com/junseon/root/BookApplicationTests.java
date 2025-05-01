@@ -1,4 +1,4 @@
-package com.junseon.book;
+package com.junseon.root;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

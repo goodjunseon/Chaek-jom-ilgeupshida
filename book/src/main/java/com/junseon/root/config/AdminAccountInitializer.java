@@ -1,8 +1,8 @@
-package com.junseon.book.config;
+package com.junseon.root.config;
 
-import com.junseon.book.domain.entity.User;
-import com.junseon.book.domain.enums.Role;
-import com.junseon.book.repository.UserRepository;
+import com.junseon.root.user.model.User;
+import com.junseon.root.user.model.enums.Role;
+import com.junseon.root.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ public class AdminAccountInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        if (userRepository.findByEmail("admin@book.com").isEmpty()) {
+        if (userRepository.findByEmailAndIsDeletedFalse("admin@book.com").isEmpty()) {
             User admin = User.builder()
                     .email("admin@book.com")
                     .password("admin1234")

@@ -1,5 +1,7 @@
-package com.junseon.book.domain.entity;
+package com.junseon.root.book.model;
 
+import com.junseon.root.author.model.Author;
+import com.junseon.root.rental.model.Rental;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +20,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private Long bookId;
 
     @Column(nullable = false)

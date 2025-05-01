@@ -89,6 +89,12 @@
 <body>
 <div class="mypage-container">
   <h2>마이페이지</h2>
+  <!-- 알림 메세지 처리 -->
+  <div th:if="${alertMessage}">
+    <script th:inline="javascript">
+      alert('[[${alertMessage}]]');
+    </script>
+  </div>
 
   <form th:action="@{'/user/' + ${user.userId} + '/myPage'}" method="post">
     <div class="form-group">

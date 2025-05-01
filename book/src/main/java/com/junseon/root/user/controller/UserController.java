@@ -1,14 +1,16 @@
-package com.junseon.book.controller;
+package com.junseon.root.user.controller;
 
-import com.junseon.book.domain.dto.user.*;
-import com.junseon.book.domain.entity.User;
-import com.junseon.book.domain.enums.LoginStatus;
-import com.junseon.book.service.UserService;
+import com.junseon.root.user.exception.UnreturnedBookExistsException;
+import com.junseon.root.user.model.User;
+import com.junseon.root.user.model.enums.LoginStatus;
+import com.junseon.root.user.model.dto.*;
+import com.junseon.root.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -150,7 +152,7 @@ public class UserController {
             return "redirect:/user/login";
         }
 
-        User updateUser = userService.userUpdate(userId, userUpdateDTO);
+        User updateUser = userService.UserUpdateByUser(userId, userUpdateDTO);
         session.setAttribute("loginUser",updateUser);
 
         return "redirect:/user/" + userId + "/myPage"; // GET으로 리다이렉트
@@ -164,10 +166,17 @@ public class UserController {
             return "redirect:/user/login";
         }
 
-        userService.deleteUser(userId);
+        userService.UserDeleteByUser(userId);
         session.invalidate(); // 세션 제거
 
         return "redirect:/"; // 홈 or 로그인 페이지로
+    }
+
+    @ExceptionHandler(UnreturnedBookExistsException.class)
+    public String handleUnreturnedBookExists(UnreturnedBookExistsException e,
+                                             RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("alertMessage", e.getMessage());
+        return "redirect:/user/" + e.getUserId() + "/myPage"; // 사용자 마이페이지로 리다이렉트
     }
 
 

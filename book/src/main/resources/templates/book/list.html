@@ -63,7 +63,6 @@
 <table>
   <thead>
   <tr>
-    <th>도서 ID</th>
     <th>제목</th>
     <th>저자</th>
     <th>ISBN</th>
@@ -72,15 +71,15 @@
   </thead>
   <tbody>
   <tr th:each="book : ${bookList}">
-    <td th:text="${book.bookId}">1</td>
     <td th:text="${book.title}">예시 제목</td>
-    <td th:text="${book.author.name}">홍길동</td>
+    <td th:text="${book.author.name}">예시 저자</td>
     <td th:text="${book.isbn}">1234567890</td>
-    <td th:text="${book.stock}">5</td>
+    <td th:text="${book.stock}">10</td>
   </tr>
   </tbody>
 </table>
 
-<a th:href="@{'/user/' + ${user.userId} + '/dashboard'}" class="back-btn">← 메인으로 돌아가기</a>
+<a th:href="@{'/user/' + (${user.userId}) + '/dashboard'}" class="back-btn">← 메인으로 돌아가기</a>
+
 </body>
 </html>

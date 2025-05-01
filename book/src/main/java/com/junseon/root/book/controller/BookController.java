@@ -1,9 +1,8 @@
-package com.junseon.book.controller;
+package com.junseon.root.book.controller;
 
-import com.junseon.book.domain.entity.Book;
-import com.junseon.book.domain.entity.User;
-import com.junseon.book.repository.BookRepository;
-import com.junseon.book.service.BookService;
+import com.junseon.root.book.model.Book;
+import com.junseon.root.user.model.User;
+import com.junseon.root.book.service.BookService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

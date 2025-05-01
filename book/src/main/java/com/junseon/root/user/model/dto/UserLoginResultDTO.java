@@ -1,6 +1,6 @@
-package com.junseon.book.domain.dto.user;
+package com.junseon.root.user.model.dto;
 
-import com.junseon.book.domain.enums.LoginStatus;
+import com.junseon.root.user.model.enums.LoginStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.junseon.book.domain.entity;
+package com.junseon.root.book.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +18,7 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long genreId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, name = "genre_name")
     private String genreName;
 
     @Column

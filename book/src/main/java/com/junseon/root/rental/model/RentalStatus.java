@@ -1,4 +1,4 @@
-package com.junseon.book.domain.enums;
+package com.junseon.root.rental.model;
 
 public enum RentalStatus {
     RENTED, // 대여 중

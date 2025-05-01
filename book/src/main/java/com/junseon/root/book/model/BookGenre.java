@@ -1,4 +1,4 @@
-package com.junseon.book.domain.entity;
+package com.junseon.root.book.model;
 
 import jakarta.persistence.*;
 import lombok.*;

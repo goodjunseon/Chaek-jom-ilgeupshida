@@ -1,6 +1,7 @@
-package com.junseon.book.domain.entity;
+package com.junseon.root.rental.model;
 
-import com.junseon.book.domain.enums.RentalStatus;
+import com.junseon.root.book.model.Book;
+import com.junseon.root.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 

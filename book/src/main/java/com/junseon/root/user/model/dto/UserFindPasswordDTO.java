@@ -1,6 +1,6 @@
-package com.junseon.book.domain.dto.user;
+package com.junseon.root.user.model.dto;
 
-import com.junseon.book.domain.entity.User;
+import com.junseon.root.user.model.User;
 import lombok.*;
 
 @Setter

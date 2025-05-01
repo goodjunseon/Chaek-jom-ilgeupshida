@@ -1,6 +1,5 @@
-package com.junseon.book.domain.dto.user;
+package com.junseon.root.user.model.dto;
 
-import com.junseon.book.domain.enums.Role;
 import lombok.*;
 
 @Getter
@@ -13,8 +12,6 @@ public class UserEditDTO {
     private String name;
     private String email;
     private String password;
-    private Role role;
-
-
-
+    private String phone;
+    private String role;
 }

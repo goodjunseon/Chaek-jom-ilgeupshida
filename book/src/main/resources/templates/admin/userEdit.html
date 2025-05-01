@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원 정보 수정 (관리자)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f0f0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[readonly] {
+      background-color: #f5f5f5;
+      color: #888;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #2196F3;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #1976D2;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #2196F3;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>회원 정보 수정 (관리자)</h2>
+
+  <form th:action="@{'/admin/users/' + ${user.userId} + '/edit'}" method="post">
+    <div class="form-group">
+      <label for="userId">회원 ID</label>
+      <input type="text" id="userId" name="userId" th:value="${user.userId}" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="name">이름</label>
+      <input type="text" id="name" name="name" th:value="${user.name}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">이메일</label>
+      <input type="email" id="email" name="email" th:value="${user.email}" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">전화번호</label>
+      <input type="text" id="phone" name="phone" th:value="${user.phone}">
+    </div>
+
+    <div class="form-group">
+      <label for="password">비밀번호 (새 비밀번호 입력)</label>
+      <input type="text" id="password" name="password">
+    </div>
+
+    <div class="form-group">
+      <label for="role">권한</label>
+      <select id="role" name="role" required>
+        <option th:selected="${user.role == 'USER'}" value="USER">USER</option>
+        <option th:selected="${user.role == 'ADMIN'}" value="ADMIN">ADMIN</option>
+      </select>
+    </div>
+
+    <button type="submit" class="submit-btn">수정 완료</button>
+  </form>
+
+  <a th:href="@{/admin/users}" class="back-link">← 회원 목록으로 돌아가기</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>나의 대여 목록</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .return-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .return-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .status-returned {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-overdue {
+            color: red;
+            font-weight: bold;
+        }
+
+        .status-rented {
+            color: orange;
+            font-weight: bold;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h2 th:text="'대여 목록 - ' + ${user.name} + '님'">대여 목록</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>도서 제목</th>
+        <th>대여일</th>
+        <th>반납 예정일</th>
+        <th>상태</th>
+        <th>반납</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rental : ${rentalList}">
+        <td th:text="${rental.book.title}">도서 제목</td>
+        <td th:text="${rental.rentalDate}">대여일</td>
+        <td th:text="${rental.deadline}">반납 예정일</td>
+        <td>
+            <span th:if="${rental.status.name() == 'RENTED'}" class="status-rented">대여중</span>
+            <span th:if="${rental.status.name() == 'OVERDUE'}" class="status-overdue">연체</span>
+            <span th:if="${rental.status.name() == 'RETURNED'}" class="status-returned">반납 완료</span>
+        </td>
+        <td>
+            <form th:action="@{'/user/rentals/' + ${rental.rentalId} + '/return'}" method="post"
+                  th:if="${rental.status.name() != 'RETURNED'}">
+                <button type="submit" class="return-btn">반납하기</button>
+            </form>
+            <span th:if="${rental.status.name() == 'RETURNED'}">-</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

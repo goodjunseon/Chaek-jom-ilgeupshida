@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>도서 대여</title>
+  <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .rental-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .rental-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .rental-btn:disabled {
+        background-color: gray;
+        cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+<h2 th:text="'도서 대여 - ' + ${user.name} + '님'"></h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>제목</th>
+    <th>저자</th>
+    <th>출판사</th>
+    <th>재고</th>
+    <th>대여</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="book : ${bookList}" th:if="${book.stock > 0}">
+    <td th:text="${book.title}">제목</td>
+    <td th:text="${book.author.name}">저자</td>
+    <td th:text="${book.publisher}">출판사</td>
+    <td th:text="${book.stock}">재고</td>
+    <td>
+      <form th:action="@{'/user/rental/' + ${user.userId} + '/' + ${book.bookId}}" method="post">
+        <button type="submit" class="rental-btn">대여하기</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

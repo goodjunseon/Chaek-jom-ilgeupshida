@@ -1,5 +1,6 @@
-package com.junseon.book.domain.entity;
+package com.junseon.root.author.model;
 
+import com.junseon.root.book.model.Book;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +19,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long authorId;
 
-    @Column(nullable = false)
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(nullable = false)

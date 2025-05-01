@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>도서 목록 관리</title>
+  <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .top-buttons {
+        margin-bottom: 20px;
+    }
+
+    .create-btn {
+        padding: 10px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .create-btn:hover {
+        background-color: #45a049;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th, td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        margin-right: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .btn-edit {
+        background-color: #2196F3;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background-color: #0b7dda;
+    }
+
+    .btn-delete {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background-color: #da190b;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        padding: 10px 15px;
+        border: 1px solid #333;
+        border-radius: 5px;
+    }
+
+    .back-btn:hover {
+        background-color: #333;
+        color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>📚 도서 목록 관리</h2>
+
+<div class="top-buttons">
+  <a th:href="@{/admin/book/create}" type="button" class="create-btn">도서 등록</a>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>제목</th>
+    <th>저자</th>
+    <th>ISBN</th>
+    <th>재고 수량</th>
+    <th>관리</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="book : ${bookList}">
+    <td th:text="${book.title}">예시 제목</td>
+    <td th:text="${book.author.name}">예시 저자</td>
+    <td th:text="${book.isbn}">1234567890</td>
+
+    <!-- 재고 수량 수정 form -->
+    <td>
+      <form th:action="@{'/admin/book/' + ${book.bookId} + '/update-stock'}" method="post" style="display:flex; align-items:center; gap:8px;">
+        <input type="number" name="stock" th:value="${book.stock}" min="0" style="width: 60px; text-align: center;" />
+        <button type="submit" class="btn btn-edit">저장</button>
+      </form>
+    </td>
+
+    <!-- 삭제 form -->
+    <td>
+      <form th:action="@{'/admin/book/' + ${book.bookId} + '/delete'}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-delete">삭제</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<a th:href="@{/admin/dashboard}" class="back-btn">← 관리자 대시보드로 돌아가기</a>
+
+</body>
+</html>

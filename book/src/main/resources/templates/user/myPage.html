@@ -63,11 +63,38 @@
     .submit-btn:hover {
       background-color: #1976D2;
     }
+
+    .back-btn {
+    display: block;
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background-color: #45a049;
+}
+.back-btn:hover {
+    background-color: #45a049;
+}
   </style>
 </head>
 <body>
 <div class="mypage-container">
   <h2>마이페이지</h2>
+  <!-- 알림 메세지 처리 -->
+  <div th:if="${alertMessage}">
+    <script th:inline="javascript">
+      alert('[[${alertMessage}]]');
+    </script>
+  </div>
 
   <form th:action="@{'/user/' + ${user.userId} + '/myPage'}" method="post">
     <div class="form-group">
@@ -96,6 +123,11 @@
   <form th:action="@{'/user/' + ${user.userId} + '/delete'}" method="post" style="margin-top: 10px;">
     <button type="submit" class="submit-btn" style="background-color: #f44336;">회원 탈퇴</button>
   </form>
+
+  <a th:href="@{'/user/' + ${user.userId} + '/dashboard'}" class="back-btn">
+    메인으로 돌아가기
+  </a>
+
 
 </div>
 </body>

@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,5 +25,7 @@ public class Author {
     private String country;
 
     @OneToMany(mappedBy = "author")
+    @Builder.Default
     private List<Book> books = new ArrayList<>();
+
 }

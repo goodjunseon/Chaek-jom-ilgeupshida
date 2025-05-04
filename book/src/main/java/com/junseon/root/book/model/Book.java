@@ -11,8 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Table(name = "book")
@@ -43,8 +42,10 @@ public class Book {
     private Author author;
 
     @OneToMany(mappedBy = "book")
+    @Builder.Default
     private List<BookGenre> bookGenres = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
+    @Builder.Default
     private List<Rental> rentals = new ArrayList<>();
 }

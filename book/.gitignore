@@ -38,3 +38,5 @@ out/
 .DS_Store
 /src/main/resources/application.yml
 
+### docs 문서
+book/docs/author_troubleshooting.md
